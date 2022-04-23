@@ -44,6 +44,7 @@ class ApplicationController < ActionController::API
         queries[:query] = "母の日"
         queries[:in_stock] = "true"
         queries[:results] = "100"
+        queries[:start_at] = rand(1..900).to_s
 
         params = message.split(",")
         params.each{|param|

@@ -25,6 +25,7 @@ module Api
                 type: 'text',
                 text: "商品名：#{item["name"]}\n値段：#{item["price"]}円\nURL：#{item["url"]}"
               }
+
               client.reply_message(event['replyToken'], message)
             end
           end
