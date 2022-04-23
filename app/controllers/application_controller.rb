@@ -19,13 +19,13 @@ class ApplicationController < ActionController::API
         }
     end
 
-    def get_products_from_yahoo()
+    def get_products_from_yahoo(received_text)
       yahoo_shopping_uri = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch"
-      params = { appid: ENV['YAHOO_APPLICATION_ID'], query: "母の日" }
+      queries = set_queries(received_text)
 
       # uriの作成
       uri = URI.parse(yahoo_shopping_uri)
-      uri.query = URI.encode_www_form(params)
+      uri.query = URI.encode_www_form(queries)
       
       # httpオブジェクトの作成
       http = Net::HTTP.new(uri.host, uri.port)
@@ -36,5 +36,26 @@ class ApplicationController < ActionController::API
       response = http.request(request)
       items = JSON.parse(response.body)
       items["hits"]
+    end
+
+    # uriのクエリーを設定して返す
+    def set_queries(message)
+        queries = {appid: ENV['YAHOO_APPLICATION_ID']}
+        queries[:query] = "母の日"
+        queries[:in_stock] = "true"
+        queries[:results] = "100"
+
+        params = message.split(",")
+        params.each{|param|
+          split_param = param.split(":")
+          case split_param[0]
+            when "下限"
+              queries[:price_from] = split_param[1]
+            when "上限"
+              queries[:price_to] = split_param[1]
+          end
+        }
+
+        queries
     end
 end
