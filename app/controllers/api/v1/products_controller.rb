@@ -10,30 +10,8 @@ module Api
             when Line::Bot::Event::MessageType::Text
               received_text = event.message['text']
               items = get_products_from_yahoo(received_text)
-              
-              item = items[rand(100)]
-              product = Product.new(
-                line_id: event["source"]["userId"],
-                yahoo_product_id: item["code"],
-                is_liked: false,
-                price: item["price"].to_i,
-                name: item["name"],
-                url: item["url"]
-              )
 
-              while product.duplicate? do
-                item = items[rand(100)]
-
-                product = Product.new(
-                  line_id: event["source"]["userId"],
-                  yahoo_product_id: item["code"],
-                  is_liked: false,
-                  price: item["price"].to_i,
-                  name: item["name"],
-                  url: item["url"]
-                )
-              end
-
+              product = set_product(items, event["source"]["userId"])
               product.save!
                 
               message = [
@@ -103,6 +81,25 @@ module Api
         end
         head :ok
       end
+
+      private 
+        def set_product(items, line_id)
+          item = items[rand(100)]
+
+          product = Product.new(
+            line_id: line_id,
+            yahoo_product_id: item["code"],
+            is_liked: false,
+            price: item["price"].to_i,
+            name: item["name"],
+            url: item["url"]
+          )
+          if product.duplicate?
+            set_product(items, line_id)
+          else
+            return product
+          end
+        end
     end
   end
 end
