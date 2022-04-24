@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_23_065637) do
+ActiveRecord::Schema.define(version: 2022_04_24_020036) do
 
   create_table "products", charset: "utf8mb4", force: :cascade do |t|
     t.string "line_id", null: false
@@ -18,6 +18,9 @@ ActiveRecord::Schema.define(version: 2022_04_23_065637) do
     t.boolean "is_liked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "price"
+    t.string "name"
+    t.string "url"
   end
 
 end
