@@ -1,24 +1,7 @@
-# README
+![スクリーンショット 2022-04-24 213522](https://user-images.githubusercontent.com/61080302/165011915-9c87390a-2332-4766-8309-7faff633ecf1.png)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 機能  
+・メッセージを送るとYahoo Shoppingから母の日に関連した商品を紹介する  
+・紹介された商品が気に入ったかをyes/noで評価できる  
+・全ユーザーの評価を集計し、ランキング上位３つの商品を紹介する  
+・「下限:min,上限:max」の形式でメッセージを送ることで、商品価格の下限と上限を設定して商品を紹介する
